@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshChat</title>
+</head>
+<body style="background-color: #aa0000;">
+
+    <script>
+        var params;
+
+        function initFreshChat() {
+          window.fcWidget.init({
+            token: params.token ? params.token : '',
+            host: "https://wchat.freshchat.com",
+            open: true,
+            externalId: params.id ? params.id:Math.round(Math.random()*9999),
+            firstName: params.firstName ? params.firstName:"",
+            lastName:  params.lastName ? params.lastName:"",
+          });
+
+          window.fcWidget.on("widget:closed", function(resp) {
+              window.flutter_inappwebview.callHandler('closechannelHandler');
+         });
+        }
+
+
+        function initialize(i,t){
+            var e;i.getElementById(t) ?
+                initFreshChat():
+                ((e=i.createElement("script")).id=t,e.async=!0,e.src="https://wchat.freshchat.com/js/widget.js",e.onload=initFreshChat,i.head.appendChild(e))
+        }
+
+        function initialiseChart(data){
+         params = data ? data : {};
+          initialize(document,"Freshchat-js-sdk", params)
+          // window.addEventListener ? window.addEventListener("load",initiateCall,!1):window.attachEvent("load",initiateCall,!1);
+        }
+        // initialiseChart();
+
+      </script>
+</body>
+</html>
